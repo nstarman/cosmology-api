@@ -3,12 +3,11 @@ ci:
 
 repos:
 
-  - repo: https://github.com/compilerla/conventional-pre-commit
-    rev: v2.2.0
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: master
     hooks:
-      - id: conventional-pre-commit
-        stages: [commit-msg]
-        args: []
+    - id: commitizen
+      stages: [commit-msg]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
