@@ -71,6 +71,8 @@ from cosmology.api.compat import (
     StandardCosmologyWrapper,
 )
 
+from .__version__ import __version__  # noqa: F401
+
 __all__ = [
     "Cosmology",
     "StandardCosmology",
