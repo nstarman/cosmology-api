@@ -1,13 +1,29 @@
 ci:
   autoupdate_schedule: "monthly"
 
+
+# Install hooks for all stages, not just pre-commit
+default_install_hook_types:
+  - commit-msg
+  - post-checkout
+  - post-commit
+  - post-merge
+  - post-rewrite
+  - pre-commit
+  - pre-merge-commit
+  - pre-push
+  - pre-rebase
+  - prepare-commit-msg
+
+
 repos:
 
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: master
+    rev: 3.2.2
     hooks:
-    - id: commitizen
-      stages: [commit-msg]
+      - id: commitizen
+      - id: commitizen-branch
+        stages: [push]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.4.0
@@ -64,4 +80,3 @@ repos:
       - id: mypy
         args:
           - --strict
-          - --allow-subclassing-any

@@ -44,6 +44,9 @@
     "tomli",
     "typing_extensions",
   ]
+  dev = [
+    "commitizen"
+  ]
 
 [project.urls]
   homepage = "https://cosmology.readthedocs.org"
