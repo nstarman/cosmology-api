@@ -7,69 +7,46 @@ list see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 """
 
+from __future__ import annotations
 
+import importlib.metadata
 import os
 import sys
-import tomli
-
-sys.path.append(os.path.abspath("../src"))
-
-
-# -- Project information -----------------------------------------------------
-
-
-def read_pyproject():
-    """Get author information from package metadata."""
-    with open(os.path.abspath("../pyproject.toml"), "rb") as f:
-        toml = tomli.load(f)
-
-    project = dict(toml["project"])
-    version = project["version"]
-    authors = ", ".join(d["name"] for d in project["authors"])
-
-    return version, authors
-
-
-package_version, package_authors = read_pyproject()
 
 project = "cosmology.api"
-author = package_authors
+author = "cosmology-api devs"
 copyright = f"2023, {author}"
-
-
-# The full version, including alpha/beta/rc tags.
-release = package_version
-# The short X.Y version.
-version = release.partition("-")[0]
+version = release = importlib.metadata.version("cosmology_api")
 
 
 # -- General configuration ---------------------------------------------------
 
-sys.path.append(os.path.abspath("./_ext"))
-
 # By default, highlight as Python 3.
 highlight_language = "python3"
 
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones.
+sys.path.append(os.path.abspath("./_ext"))
 extensions = [
     "sphinx.ext.autosummary",
+    # "sphinx.ext.autodoc",
     "sphinx.ext.doctest",
     "sphinx.ext.intersphinx",
-    "numpydoc",
+    "sphinx.ext.mathjax",
+    "sphinx.ext.napoleon",
+    "sphinx_autodoc_typehints",
     "sphinx_copybutton",
     "sphinx_ext_autosummary_context",
     "sphinx_ext_cosmology_api",
 ]
 
-# Add any paths that contain templates here, relative to this directory.
-templates_path = ["_templates"]
-
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
-# This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
+source_suffix = [".rst", ".md"]
+exclude_patterns = [
+    "_build",
+    "**.ipynb_checkpoints",
+    "Thumbs.db",
+    ".DS_Store",
+    ".env",
+    ".venv",
+]
 
 # This is added to the end of RST files - a good place to put substitutions to
 # be used globally.
@@ -78,6 +55,10 @@ rst_epilog = """
 
 .. _Python: http://www.python.org
 """
+
+# Add any paths that contain templates here, relative to this directory.
+templates_path = ["_templates"]
+
 
 intersphinx_mapping = {
     "python": (
@@ -94,21 +75,20 @@ intersphinx_mapping = {
     ),
 }
 
+nitpick_ignore = [
+    ("py:class", "_io.StringIO"),
+    ("py:class", "_io.BytesIO"),
+]
+
+always_document_param_types = True
+
 
 # -- Options for HTML output -------------------------------------------------
 
-# The theme to use for HTML and HTML Help pages.  See the documentation for
-# a list of builtin themes.
-#
 html_theme = "furo"
 
-# The name for this set of Sphinx documents.  If None, it defaults to
-# "<project> v<release> documentation".
 html_title = f"{project} v{release}"
 
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 
 
@@ -123,10 +103,7 @@ autodoc_default_options = {
     "show-inheritance": True,
 }
 
-
 add_module_names = False
-
-# autodoc_class_signature = "separated"
 
 autosummary_generate = True
 

@@ -269,6 +269,6 @@ compatible, though :mod:`numpy` plans full support.
 In this project you will see the ``Array`` Protocol used throughout the API.
 Also, there is a generic type variable ``InputT`` that is used to describe the
 type of the input to a function. This is a :class:`~typing.TypeVar`. Due to the
-cuurent limitations of Python, this is an unconstrained :class:`~typing.TypeVar`
+current limitations of Python, this is an unconstrained :class:`~typing.TypeVar`
 but it is intended to be constrained to ``Array`` + other, e.g. :class:`float`.
 In future, ``InputT`` will be constrained.

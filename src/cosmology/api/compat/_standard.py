@@ -17,7 +17,7 @@ class StandardCosmologyWrapper(
     StandardCosmology[Array, InputT],
     Protocol,
 ):
-    """The standard for ``StandardCosmology`` compatability wrappers.
+    """The standard for ``StandardCosmology`` compatibility wrappers.
 
     This is a protocol class that defines an API standard. It is not intended to
     be used directly, and should not be instantiated. Instead, it should be used

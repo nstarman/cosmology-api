@@ -1,4 +1,8 @@
-"""The Cosmology API standard."""
+"""Copyright (c) 2023 cosmology-api devs. All rights reserved.
+
+cosmology.api: Cosmology API standard
+"""
+
 from __future__ import annotations
 
 from cosmology.api._components import (
@@ -67,12 +71,14 @@ from cosmology.api._extras import (
 )
 from cosmology.api._namespace import CosmologyNamespace
 from cosmology.api._standard import StandardCosmology
+from cosmology.api._version import version as __version__
 from cosmology.api.compat import (
     CosmologyWrapper,
     StandardCosmologyWrapper,
 )
 
 __all__ = [
+    "__version__",
     "Cosmology",
     "StandardCosmology",
     # --- Components ---

@@ -1,13 +1,24 @@
-name: Build and Publish
+name: CD
 
 on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
   release:
     types:
       - published
-  workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FORCE_COLOR: 3
 
 jobs:
   build_and_publish:
@@ -16,11 +27,12 @@ jobs:
     uses: OpenAstronomy/github-actions-workflows/.github/workflows/publish_pure_python.yml@v1
     with:
       test_extras: test
-      test_command: pytest $GITHUB_WORKSPACE/tests $GITHUB_WORKSPACE/docs -p no:warnings
+      test_command:
+        pytest $GITHUB_WORKSPACE/tests $GITHUB_WORKSPACE/docs -p no:warnings
 
       upload_to_pypi: refs/tags/v
 
-      upload_to_anaconda: false  # TODO!
+      upload_to_anaconda: false # TODO!
       anaconda_user: cosmology
       anaconda_package: cosmology.api
 

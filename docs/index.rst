@@ -47,12 +47,12 @@ any supporting library. For example
 There are a few types of people who might find themselves reading this:
 
 1. **End users** who want to do some cosmology with an existing library and
-   aren't planning on sharing their analysis scripts for re-use. Welcome, but
+   aren't planning on sharing their analysis scripts for reuse. Welcome, but
    you probably don't need to read this documentation. Just check that your
    preferred library implements the API, and you're good to go.
 
 2. **End users** who want to write code that works with multiple cosmology
-   libraries. Welcome, the docs are layed out primarily with you in mind! You
+   libraries. Welcome, the docs are laid out primarily with you in mind! You
    should start with the Usage section of this documentation, and then read and
    use the API section when writing your code. If you encounter and need some
    code that doesn't implement this API, please read the Developers section or

@@ -10,6 +10,8 @@ from types import SimpleNamespace
 from typing import TypeVar
 
 import pytest
+from packaging.version import Version
+
 from cosmology.api import (
     BaryonComponent,
     ComovingDistanceMeasures,
@@ -33,7 +35,6 @@ from cosmology.api import (
     TotalComponent,
 )
 from cosmology.api._array_api import Array
-from packaging.version import Version
 
 if Version(get_version("numpy")) >= Version("1.23"):
     import numpy.array_api as np
@@ -274,7 +275,7 @@ DISTANCES_ATTRS, DISTANCES_METHS = _get_attrs_meths(DistanceMeasures, Cosmology)
 
 @pytest.fixture(scope="session")
 def dists_attrs() -> frozenset[str]:
-    """The DistanceMeasures atributes."""
+    """The DistanceMeasures attributes."""
     return DISTANCES_ATTRS
 
 
@@ -319,7 +320,7 @@ STDCOSMO_ATTRS, STDCOSMO_METHS = _get_attrs_meths(StandardCosmology, Cosmology)
 
 @pytest.fixture(scope="session")
 def standard_attrs() -> frozenset[str]:
-    """The Standard FLRW API atributes."""
+    """The Standard FLRW API attributes."""
     return STDCOSMO_ATTRS
 
 

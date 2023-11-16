@@ -1,4 +1,4 @@
-"""The Cosmology API standard for compatability wrappers."""
+"""The Cosmology API standard for compatibility wrappers."""
 from __future__ import annotations
 
 from cosmology.api.compat._core import CosmologyWrapper

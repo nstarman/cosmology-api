@@ -1,17 +1,22 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs", "mypy>=0.991"]
+build-backend = "hatchling.build"
+
+
 [project]
   name = "cosmology.api"
-  version = "0.1.1.dev"
   description = "Cosmology API standard"
   readme = "README.rst"
   requires-python = ">=3.9"
-  license = {file = "LICENSE.txt"}
+  license = {file = "LICENSE"}
   keywords = ["cosmology", "API"]
   authors = [
-    {name = "Nathaniel Starkman", email = "n.starkman@mail.utoronto.ca"},
-    {name = "Nicolas Tessore", email = "n.tessore@ucl.ac.uk"}
+    { name = "cosmology-api devs", email = "nstarman@users.noreply.github.com" },
+    { name = "Nathaniel Starkman", email = "nstarman@users.noreply.github.com" },
+    { name = "Nicolas Tessore", email = "n.tessore@ucl.ac.uk"}
   ]
   maintainers = [
-    {name = "Nathaniel Starkman", email = "n.starkman@mail.utoronto.ca"},
+    {name = "Nathaniel Starkman", email = "nstarman@users.noreply.github.com"},
     {name = "Nicolas Tessore", email = "n.tessore@ucl.ac.uk"}
   ]
   classifiers = [
@@ -19,58 +24,60 @@
     "Intended Audience :: Developers",
     "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent",
+    "Programming Language :: Python",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+    "Typing :: Typed",
   ]
-  dependencies = [
-  ]
+  dynamic = ["version"]
+  dependencies = []
 
 [project.optional-dependencies]
-  all = [
-  ]
   test = [
     "coverage[toml]",
     "numpy>=1.21",
     "packaging",
-    "pytest",
-    "pytest-cov",
+    "pytest >=6",
+    "pytest-cov >=3",
     "sybil",
     "typing_extensions",
   ]
+  dev = [
+    "pytest >=6",
+    "pytest-cov >=3",
+  ]
   docs = [
-    "furo",
+    "furo>=2023.08.17",
     "numpydoc",
-    "sphinx",
-    "sphinx-copybutton",
+    "sphinx>=7.0",
+    "sphinx_autodoc_typehints",
+    "sphinx_copybutton",
     "sybil",
     "tomli",
     "typing_extensions",
   ]
 
 [project.urls]
-  homepage = "https://cosmology.readthedocs.org/projects/api"
-  repository = "https://github.com/cosmology-api/cosmology.api"
-  documentation = "https://cosmology.readthedocs.org/projects/api"
+  Homepage = "https://github.com/cosmology-api/cosmology.api"
+  "Bug Tracker" = "https://github.com/cosmology-api/cosmology.api/issues"
+  Discussions = "https://github.com/cosmology-api/cosmology.api/discussions"
+  Changelog = "https://github.com/cosmology-api/cosmology.api/releases"
+  Documentation = "https://cosmology.readthedocs.org/projects/api"
 
 
-[build-system]
-  requires = [
-    "mypy>=0.991",
-    "setuptools>=45.0",
-    "setuptools_scm[toml]>=6.3.1",
-    "wheel",
+[tool.hatch]
+  version.source = "vcs"
+  build.hooks.vcs.version-file = "src/cosmology/api/_version.py"
+  envs.default.dependencies = [
+    "pytest",
+    "pytest-cov",
   ]
 
-  build-backend = 'setuptools.build_meta'
-
-
-[tool.setuptools]
-  package-dir = {"" = "src"}
-
-[tool.setuptools_scm]
-
-
-[tool.coverage.run]
-  omit = ["tests/*"]
 
 [tool.coverage.report]
   exclude_lines = [
@@ -78,23 +85,16 @@
     # and branches that don't pertain to this version of Python
     "pragma: no cover",
     "pragma: py{ignore_python_version}",
-    # Don't complain if tests don't hit defensive assertion code:
-    "raise AssertionError",
-    "raise NotImplementedError",
-    # Don't complain if non-runnable code isn't run
-    "if __name__ == .__main__.:",
     # Don't complain about abstract methods, they aren't run:
     '@(abc\.)?abstractmethod',
     # Exclude type check blocks and Protocol contents, they aren't run:
     "if TYPE_CHECKING:",
     '\.\.\.',
-    # Don't complain about IPython completion helper
-    "def _ipython_key_completions_",
   ]
 
 
 [tool.mypy]
-  python_version = 3.9
+  python_version = "3.9"
 
   namespace_packages = true
   explicit_package_bases = true
@@ -102,6 +102,8 @@
 
   strict = true
   disallow_subclassing_any = false
+  show_error_codes = true
+  enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
   disallow_untyped_defs = true
   no_implicit_optional = true
   warn_return_any = true
@@ -126,30 +128,40 @@
 
 
 [tool.pytest.ini_options]
-minversion = 7.0
+minversion = "7.0"
+xfail_strict = true
+log_cli_level = "INFO"
 testpaths = [
-    "tests",
-    "src/cosmology",
-    "docs",
+  "tests",
+  "src/cosmology",
+  "docs",
 ]
 text_file_format = "rst"
-addopts = "-p no:doctest"
+addopts = [
+  "-p no:doctest",
+  "-ra",
+  "--showlocals",
+  "--strict-markers",
+  "--strict-config"
+]
 markers = [
     "incompatible_with_mypyc: run when testing mypyc compiled code",
 ]
 filterwarnings = [
-    # tomlkit
-    "ignore:The config value",
-    # NumPy
-    "ignore:The numpy.array_api submodule is still experimental. See NEP 47.:UserWarning",
+  # tomlkit
+  "ignore:The config value",
+  # NumPy
+  "ignore:The numpy.array_api submodule is still experimental. See NEP 47.:UserWarning",
 ]
 
 
 [tool.ruff]
+src = ["src"]
 target-version = "py39"
 line-length = 88
 
-select = ["ALL"]
+[tool.ruff.lint]
+extend-select = ["ALL"]
 ignore = [
   "ANN101",  # Missing type annotation for {name} in method  # TODO: report to Ruff
   "ARG001",  # Unused function argument
@@ -167,8 +179,10 @@ ignore = [
   "TD002",  # Missing author in TODO
   "TD003",  # Missing issue link on the line following this TODO
 ]
+# Uncomment if using a _compat.typing backport
+# typing-modules = ["cosmology_api._compat.typing"]
 
-[tool.ruff.per-file-ignores]
+[tool.ruff.lint.per-file-ignores]
 "src/cosmology/api/_array_api/*.py" = ["A002", "A003", "D212", "D205", "E501", "N801"]
 "docs/*.py" = ["INP001"]
 "tests/*.py" = [
@@ -177,7 +191,21 @@ ignore = [
   "TID252",
 ]
 "test_*.py" = ["D", "N8", "S101"]
+"noxfile.py" = ["T20"]
 
 [tool.ruff.isort]
 forced-separate = ["tests"]
-required-imports = ["from __future__ import annotations"]
+
+
+[tool.pylint]
+py-version = "3.9"
+ignore-paths = [".*/_version.py"]
+reports.output-format = "colorized"
+similarities.ignore-imports = "yes"
+messages_control.disable = [
+  "design",
+  "fixme",
+  "line-too-long",
+  "missing-module-docstring",
+  "wrong-import-position",
+]

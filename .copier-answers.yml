@@ -1,0 +1,12 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: 2023.10.27
+_src_path: gh:scientific-python/cookie
+backend: hatch
+email: nstarman@users.noreply.github.com
+full_name: cosmology-api devs
+license: BSD
+org: cosmology-api
+project_name: cosmology.api
+project_short_description: Cosmology API standard
+url: https://github.com/cosmology-api/cosmology.api
+vcs: true

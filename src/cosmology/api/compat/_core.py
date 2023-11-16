@@ -11,7 +11,7 @@ __all__: list[str] = []
 
 
 class CosmologyWrapper(Cosmology[Array, InputT], Protocol):  # type: ignore[misc]
-    """The standard for ``Cosmology`` compatability wrappers.
+    """The standard for ``Cosmology`` compatibility wrappers.
 
     This is a protocol class that defines an API standard. It is not intended to
     be used directly, and should not be instantiated. Instead, it should be used
